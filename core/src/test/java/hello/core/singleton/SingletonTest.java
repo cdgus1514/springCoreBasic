@@ -5,6 +5,7 @@ import hello.core.member.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,5 +42,26 @@ public class SingletonTest {
         // isSameAs > ==
         // isEqualTo > equals()
         assertThat(instanceService1).isSameAs(instanceService2);
+    }
+
+
+    @Test
+    @DisplayName("스프링 컨테이너와 싱글톤")
+    void springContainer() {
+
+//        AppConfig appConfig = new AppConfig();
+        AnnotationConfigApplicationContext appConfig = new AnnotationConfigApplicationContext(AppConfig.class);
+
+//        MemberService memberService1 = appConfig.memberService();
+//        MemberService memberService2 = appConfig.memberService();
+        MemberService memberService1 = appConfig.getBean("memberService", MemberService.class);
+        MemberService memberService2 = appConfig.getBean("memberService", MemberService.class);
+
+
+        System.out.println("memberService1 = " + memberService1);
+        System.out.println("memberService2 = " + memberService2);
+
+//        assertThat(memberService1).isNotSameAs(memberService2);
+        assertThat(memberService1).isSameAs(memberService2);
     }
 }
