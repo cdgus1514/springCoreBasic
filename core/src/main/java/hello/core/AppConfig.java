@@ -19,18 +19,35 @@ public class AppConfig {
      * @return
      */
 
+
+    // @Bean memberService -> new MemoryMemberRepository()
+    // @Bean orderService -> new MemoryMemberRepository()
+    // Call AppConfig.memberService
+    // Call AppConfig.memberRepository
+    // Call AppConfig.orderService
+    // Call AppConfig.memberRepository
+
+    // 서로 다른객체로 생성될 것처럼 보이나 모두 같은 객체로 생성된다. (memberRepository 처음 1번만 실행)
+    // Call AppConfig.memberService
+    // Call AppConfig.memberRepository
+    // Call AppConfig.orderService
+
+
     @Bean
     public MemberService memberService() {
+        System.out.println("Call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemoryMemberRepository memberRepository() {
+        System.out.println("Call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     public OrderService orderService() {
+        System.out.println("Call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
