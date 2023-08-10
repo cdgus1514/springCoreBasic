@@ -149,3 +149,18 @@
 3) @Service
 4) @Repository
 5) @Configuration
+
+
+### 5. 컴포넌트 스캔에서 같은 빈 이름으로 등록할 경우
+
+1) 자동 빈 등록으로 중복되는 경우
+- ConflictingBeanDefinitionException 발생
+<br>
+<br>
+
+2) 수동 빈등록과 자동 빈 등록으로 중복되는 경우
+- Overriding bean definition for bean
+- 수동으로 등록한 빈이 우선권을 가지고 자동 빈을 오바라이딩 해버린다
+
+> * 최근 스프링 부트에서는 수동 빈 등록과 자동 빈 등록이 충돌나게 되면 오류가 발생하도록 설정
+> could not be registered. A bean with that name has already been defined in file [경로] and overriding is disabled.

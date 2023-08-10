@@ -1,5 +1,8 @@
 package hello.core;
 
+import hello.core.member.MemberRepository;
+import hello.core.member.MemoryMemberRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -12,4 +15,12 @@ import org.springframework.context.annotation.FilterType;
 )
 public class AutoAppConfig {
     // @ComponentScan > @Component이 붙은 클래스를 모두 스프링 빈으로 등록
+
+
+    // 수동등록 중복발생 테스트
+    @Bean(name = "memoryMemberRepository")
+    MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+
 }
