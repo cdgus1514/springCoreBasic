@@ -57,10 +57,12 @@ public class SingletonWithProtorypeTest1 {
 
 
         @Autowired
-        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+//        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+        private Provider<PrototypeBean> prototypeBeanProvider;
 
         public int logic() {
-            PrototypeBean prototypeBean = prototypeBeanProvider.getObject(); // 스프링 컨테이너를 통해 해당 빈을 찾아서 반환
+//            PrototypeBean prototypeBean = prototypeBeanProvider.getObject(); // 스프링 컨테이너를 통해 해당 빈을 찾아서 반환
+            PrototypeBean prototypeBean = prototypeBeanProvider.get();
 
             prototypeBean.addCount();
 
