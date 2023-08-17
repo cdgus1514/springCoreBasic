@@ -1,5 +1,6 @@
 package hello.core.scope;
 
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +25,37 @@ public class SingletonWithProtorypeTest1 {
         prototypeBean2.addCount();
         assertThat(prototypeBean2.getCount()).isEqualTo(1);
 
+    }
+
+
+    @Test
+    void singletonClientUSePrototype() {
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(ClientBean.class, PrototypeBean.class);
+
+        // 생성시점에 주입된 빈을 사용하므로 프로토타입 빈이라고 해도 같은 인스턴스를 사용
+        ClientBean clientBean1 = ac.getBean(ClientBean.class);
+        int logic1 = clientBean1.logic();
+        assertThat(logic1).isEqualTo(1);
+
+        ClientBean clientBean2 = ac.getBean(ClientBean.class);
+        int logic2 = clientBean2.logic();
+        assertThat(logic2).isEqualTo(2);
+    }
+
+
+    /*
+     * 생성자를 호출하면서 스프링 컨테이너에서 prototypeBean을 생성해서 반환
+     */
+    @Scope("singleton")
+    @RequiredArgsConstructor
+    static class ClientBean {
+        private final PrototypeBean prototypeBean; // 생성시점에 주입
+
+        public int logic() {
+            prototypeBean.addCount();
+
+            return prototypeBean.getCount();
+        }
     }
 
 
